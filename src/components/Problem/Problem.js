@@ -15,9 +15,9 @@ type Props = {
 };
 
 type State = {
-  stage: string,
+  isLoading: boolean,
   questions: Array<KeyValue>,
-  selectedQuestion: string,
+  selectedQuestion: { facts: Array<string>, question: string },
   answer: string
 };
 
@@ -26,45 +26,53 @@ export class Problem extends Component<Props, State> {
     super(props);
 
     this.state = {
-      stage: "",
+      isLoading: false,
       questions: [
-        { label: "Question1", value: "Question1" },
-        { label: "Question2", value: "Question2" }
+        {
+          label:
+            "Jack has 8 cats. Jill has 7 cats. How many cats are there in all?",
+          value:
+            "Jack has 8 cats. Jill has 7 cats. How many cats are there in all?"
+        },
+        {
+          label:
+            "Jack has 8 cats and 2 dogs. Jill has 7 cats and 1 dog. How many cats are there in all?",
+          value:
+            "Jack has 8 cats and 2 dogs. Jill has 7 cats and 1 dog. How many cats are there in all?"
+        }
       ],
-      selectedQuestion: "",
+      selectedQuestion: { facts: [], question: "" },
       answer: ""
     };
   }
 
   handleQuestionSelect = (item: KeyValue) => {
-    this.setState({ stage: "LOADING", selectedQuestion: item.value });
-    this.solve(item.value);
+    // create the problem
+    const problem = this.props.client.problem(item.value);
+    const question = problem.parse();
+    this.setState({ isLoading: true, selectedQuestion: question, answer: "" });
+    this.solve(problem);
   };
 
-  solve = async (question: string) => {
-    // create the problem
-    const problem = this.props.client.problem(question);
+  solve = async (problem: any) => {
     const answer = await problem.solve();
-    this.setState({ stage: "ANSWER", answer: answer });
+    this.setState({ isLoading: false, answer: answer });
   };
 
   render() {
+    const { answer, questions, selectedQuestion, isLoading } = this.state;
     return (
       <div>
-        <SelectInput
-          items={this.state.questions}
-          onSelect={this.handleQuestionSelect}
-        />
-        {this.state.stage === "LOADING" && (
+        <SelectInput items={questions} onSelect={this.handleQuestionSelect} />
+        <Box>--- ---- ---</Box>
+        <Box>
+          <Answer data={answer} question={selectedQuestion} />
+        </Box>
+        {isLoading && (
           <Color green>
             <Spinner type="dots" />
             Loading...
           </Color>
-        )}
-        {this.state.stage === "ANSWER" && (
-          <Box>
-            <Answer data={this.state.answer} />
-          </Box>
         )}
       </div>
     );

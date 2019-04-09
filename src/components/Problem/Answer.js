@@ -1,20 +1,31 @@
 // @flow
 import React, { Component } from "react";
-import { Color, Box } from "ink";
+import { Color, Box, Text } from "ink";
 
 type Props = {
-  data: any
+  data: string,
+  question: { facts: Array<string>, question: string }
 };
 
 type State = {};
 
 export class Answer extends Component<Props, State> {
   render() {
-    const { data } = this.props;
+    const { data, question } = this.props;
     return (
-      <Box>
-        <Color grey>{data}</Color>
-      </Box>
+      <div>
+        {question.facts.map((fact, i) => (
+          <Color grey key={i}>
+            {fact}
+          </Color>
+        ))}
+        <Box>
+          <Text>{question.question}</Text>
+        </Box>
+        <Box>
+          <Color blue>{data}</Color>
+        </Box>
+      </div>
     );
   }
 }
