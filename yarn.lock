@@ -2357,9 +2357,9 @@ ecc-jsbn@~0.1.1:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
 
-edgecalculator@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/edgecalculator/-/edgecalculator-1.0.0.tgz#5847c88f869da3fecb02da3d1d4c5155460848d9"
+edgecalculator@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/edgecalculator/-/edgecalculator-1.0.1.tgz#f1325ad000363f92f4c22bd60003a0fa904b6199"
   dependencies:
     "@sentry/node" "^4.6.3"
     body-parser "^1.18.3"
