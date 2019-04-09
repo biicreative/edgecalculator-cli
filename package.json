@@ -1,0 +1,82 @@
+{
+  "name": "edgecalculator-cli",
+  "version": "0.0.0-development",
+  "description": "Edge Calculator CLI",
+  "main": "dist/cli.js",
+  "author": "Federico Minzoni",
+  "license": "MIT",
+  "repository": {
+    "url": "https://github.com/biicreative/edgecalculator-cli",
+    "type": "git"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "edgecalculator": "^1.0.0",
+    "ink": "^2.0.5",
+    "ink-select-input": "^3.0.2",
+    "ink-spinner": "^3.0.0",
+    "ink-text-input": "^3.0.0",
+    "meow": "^5.0.0",
+    "react": "^16.8.4"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.2.0",
+    "@babel/node": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.3.3",
+    "@babel/polyfill": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "eslint": "^5.14.0",
+    "eslint-config-react-app": "^3.0.8",
+    "eslint-plugin-flowtype": "^3.4.2",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react": "^7.12.4",
+    "flow-bin": "^0.96.0",
+    "jest": "^24.1.0",
+    "jest-cli": "^24.1.0",
+    "pkg": "^4.3.7",
+    "prettier": "^1.16.4",
+    "rimraf": "^2.6.3",
+    "semantic-release": "^15.13.3"
+  },
+  "bin": {
+    "edgecalculator-cli": "dist/cli.js"
+  },
+  "scripts": {
+    "validate": "yarn prettier:check && yarn lint:eslint && yarn typecheck",
+    "prettier:check": "yarn prettier --debug-check $npm_package_config_prettier_target",
+    "prettier:write": "yarn prettier --write $npm_package_config_prettier_target",
+    "lint:eslint": "yarn eslint $npm_package_config_prettier_target",
+    "typecheck": "flow check",
+    "test": "jest",
+    "clean": "rimraf dist/*",
+    "build": "yarn clean && babel src --out-dir dist --ignore tests",
+    "bundle": "yarn build && pkg dist/cli.js -c package.json -o packed/edgecalculator-cli --options no-warnings",
+    "pack": "rimraf packed && yarn build && yarn bundle",
+    "semantic-release": "semantic-release"
+  },
+  "config": {
+    "prettier_target": "src/**/*.{js,md,json}"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "./dist"
+    ]
+  },
+  "pkg": {
+    "targets": [
+      "node8-alpine-x64",
+      "node8-linux-x64",
+      "node8-macos-x64"
+    ]
+  }
+}
