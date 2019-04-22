@@ -9,6 +9,14 @@ type Props = {
 
 type State = {};
 
+const toEmoji = (text: string) => {
+  return text
+    .replace("cats", "😺")
+    .replace("cat", "😺")
+    .replace("dogs", "🐶")
+    .replace("dog", "🐶");
+};
+
 export class Answer extends Component<Props, State> {
   render() {
     const { data, question } = this.props;
@@ -16,11 +24,11 @@ export class Answer extends Component<Props, State> {
       <div>
         {question.facts.map((fact, i) => (
           <Color grey key={i}>
-            {fact}
+            {toEmoji(fact)}
           </Color>
         ))}
         <Box>
-          <Text>{question.question}</Text>
+          <Text>{toEmoji(question.question)}</Text>
         </Box>
         <Box>
           <Color blue>{data}</Color>
