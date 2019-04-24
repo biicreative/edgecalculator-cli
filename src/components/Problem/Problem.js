@@ -4,6 +4,7 @@ import { Box, Color } from "ink";
 import SelectInput from "ink-select-input";
 import Spinner from "ink-spinner";
 import { Answer } from "./Answer";
+import { questions } from "./data";
 
 type KeyValue = {
   label: string,
@@ -27,20 +28,7 @@ export class Problem extends Component<Props, State> {
 
     this.state = {
       isLoading: false,
-      questions: [
-        {
-          label:
-            "Jack has 8 cats. Jill has 7 cats. How many cats are there in all?",
-          value:
-            "Jack has 8 cats. Jill has 7 cats. How many cats are there in all?"
-        },
-        {
-          label:
-            "Jack has 8 cats and 2 dogs. Jill has 7 cats and 1 dog. How many cats are there in all?",
-          value:
-            "Jack has 8 cats and 2 dogs. Jill has 7 cats and 1 dog. How many cats are there in all?"
-        }
-      ],
+      questions: questions,
       selectedQuestion: { facts: [], question: "" },
       answer: ""
     };
